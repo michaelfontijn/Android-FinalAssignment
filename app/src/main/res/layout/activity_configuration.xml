@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        tools:context=".MainActivity">
+        tools:context=".ConfigurationActivity">
 
 
         <ImageView
@@ -43,6 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/length" />
@@ -145,6 +146,7 @@
             app:layout_constraintTop_toBottomOf="@+id/radioGoal">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/weight" />
@@ -155,15 +157,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="@string/calculate"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/radioRateOfActivity" />
 
         <EditText
             android:id="@+id/txtDate"
@@ -188,6 +191,58 @@
             app:layout_constraintStart_toEndOf="@+id/txtDate"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
             app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+        <RadioGroup
+            android:id="@+id/radioRateOfActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+            <TextView
+                android:id="@+id/tvVB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_of_activity" />
+
+            <RadioButton
+                android:id="@+id/radioActivityOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:checked="true"
+                android:text="@string/activity_one"
+                android:textColorLink="@color/colorAccent" />
+
+            <RadioButton
+                android:id="@+id/radioActivityTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/activity_two" />
+
+            <RadioButton
+                android:id="@+id/radioActivityThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/activity_three" />
+            <RadioButton
+                android:id="@+id/radioActivityFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/activity_four" />
+            <RadioButton
+                android:id="@+id/radioActivityFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/activity_five" />
+
+        </RadioGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,12 +14,14 @@ data class UserInformation(
     var goal : Int,
     @ColumnInfo(name = "gender")
     var gender: Int,
-    @ColumnInfo(name = "dateOfBirth")
-    var dateOfBirth : Date? = null,
-    @ColumnInfo(name = "length")
-    var length : Int,
     @ColumnInfo(name = "rateOfActivity")
     var rateOfActivity : Int,
+    @ColumnInfo(name = "length")
+    var length : Int,
+    @ColumnInfo(name = "dateOfBirth")
+    var dateOfBirth : Date? = null,
+    @ColumnInfo(name = "currentWeight")
+    var currentWeight : Double,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id : Long? = null

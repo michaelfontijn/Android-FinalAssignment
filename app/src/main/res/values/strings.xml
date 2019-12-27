@@ -11,4 +11,10 @@
     <string name="goal_lose">Afvallen</string>
     <string name="goal_gain">Aankomen</string>
     <string name="calculate">Bereken!</string>
+    <string name="rate_of_activity">activiteitsgraad</string>
+    <string name="activity_one">Niet actief</string>
+    <string name="activity_two">Licht actief</string>
+    <string name="activity_three">Aardig actief</string>
+    <string name="activity_four">Erg actief</string>
+    <string name="activity_five">Zeer actief</string>
 </resources>

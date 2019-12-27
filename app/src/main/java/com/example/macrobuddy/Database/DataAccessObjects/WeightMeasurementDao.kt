@@ -13,6 +13,6 @@ interface WeightMeasurementDao{
     @Insert
     fun insertWeightMeasurement(weightMeasurement: WeightMeasurement)
 
-    @Query("SELECT * FROM weigthMeasurementTable")
+    @Query("SELECT * FROM weightMeasurementTable")
     fun getMeasurements(): LiveData<List<WeightMeasurement>>
 }
