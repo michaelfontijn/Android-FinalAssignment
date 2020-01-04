@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.macrobuddy.Managers.CalculationManager
+import com.example.macrobuddy.Models.CalculationResult
 import com.example.macrobuddy.Models.UserInformation
 import com.example.macrobuddy.ViewModels.ConfigurationActivityViewModel
 import com.example.macrobuddy.ViewModels.HomeAcitivityViewModel
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -17,6 +20,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        initView()
+        initViewModel()
     }
 
 
@@ -32,7 +38,14 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(HomeAcitivityViewModel::class.java)
 
         viewModel.userInformation.observe(this, androidx.lifecycle.Observer { obj ->
-            soms(obj)
+            txtCurrentWeigth.setText(obj.currentWeight.toString())
+
+            //perform the calculation and show the results
+            var calculationResult = CalculationManager.performCalculation(obj)
+            tvCallories.text = calculationResult.calories.toString()
+            tvProtein.text = calculationResult.protein.toString()
+            tvCarbs.text =  calculationResult.carbs.toString()
+            tvVats.text = calculationResult.vats.toString()
         })
 
         //if an error is thrown in the view model show it to the user
