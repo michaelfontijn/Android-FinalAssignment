@@ -18,6 +18,7 @@ class UserInformationRepository(context: Context) {
         return userInformationDao.getUserInformation()
     }
 
+
     /**
      * Inserts a new record if none is present yet otherwise updates the existing record.
      */

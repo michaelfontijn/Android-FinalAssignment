@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import com.example.macrobuddy.Database.Repositories.UserInformationRepository
 import com.example.macrobuddy.Enums.Gender
 import com.example.macrobuddy.Enums.Goal
 import com.example.macrobuddy.Enums.RateOfActivity
@@ -52,6 +53,11 @@ class ConfigurationActivity : AppCompatActivity() {
             //when the configuration was successfully stored go to the home activity
             if (success) startActivity(Intent(this, HomeActivity::class.java))
         })
+
+        viewModel.userInformationObj.observe(this, androidx.lifecycle.Observer { obj ->
+            //if there is already a userInformationRecord in the database continue to homeActivity right away
+            if(obj != null) startActivity(Intent(this, HomeActivity::class.java))
+        })
     }
 
     /**
@@ -86,7 +92,6 @@ class ConfigurationActivity : AppCompatActivity() {
         val month = datePicker.month + 1
         val year = datePicker.year
         var dateString = "$year/$month/$day"
-        var temp = Date(dateString) //TODO use this on submit (just get txtDate text)
         txtDate.setText(dateString)
     }
 

@@ -2,6 +2,7 @@ package com.example.macrobuddy.ViewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.macrobuddy.Database.Repositories.UserInformationRepository
 import com.example.macrobuddy.Models.UserInformation
@@ -15,7 +16,8 @@ class ConfigurationActivityViewModel(application: Application) : AndroidViewMode
     private val userInformationRepository = UserInformationRepository(application.applicationContext)
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
-    val userInformation = MutableLiveData<UserInformation?>()
+    val userInformation = MutableLiveData<UserInformation>()
+    val userInformationObj : LiveData<UserInformation> = userInformationRepository.getUserInformation()
     val error = MutableLiveData<String?>()
     val success = MutableLiveData<Boolean>()
 
