@@ -18,7 +18,25 @@ class UserInformationRepository(context: Context) {
         return userInformationDao.getUserInformation()
     }
 
+    /**
+     * Inserts a new record if none is present yet otherwise updates the existing record.
+     */
     fun setUserInformation(userInformation : UserInformation){
-        userInformationDao.setUserInformation(userInformation)
+        var obj = userInformationDao.getUserInfromationObj()
+
+        //in case no user information record is present yet insert it, otherwise update the existing record
+        if(obj == null){
+            userInformationDao.insertUserInformation(userInformation)
+        }else{
+            obj.apply {
+                goal = userInformation.goal
+                gender = userInformation.gender
+                rateOfActivity = userInformation.rateOfActivity
+                length = userInformation.length
+                dateOfBirth = userInformation.dateOfBirth
+                currentWeight = userInformation.currentWeight
+            }
+            userInformationDao.updateUserInformation(obj)
+        }
     }
 }

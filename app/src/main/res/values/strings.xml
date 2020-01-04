@@ -17,4 +17,9 @@
     <string name="activity_three">Aardig actief</string>
     <string name="activity_four">Erg actief</string>
     <string name="activity_five">Zeer actief</string>
+    <string name="current_weight">Huidig gewicht(kg)</string>
+    <string name="protein">Protein</string>
+    <string name="carbs">Carbs</string>
+    <string name="vats">Vet</string>
+    <string name="callories">Callorieën</string>
 </resources>

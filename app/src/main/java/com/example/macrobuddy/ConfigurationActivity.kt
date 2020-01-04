@@ -1,25 +1,30 @@
 package com.example.macrobuddy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.example.macrobuddy.Enums.Gender
 import com.example.macrobuddy.Enums.Goal
 import com.example.macrobuddy.Enums.RateOfActivity
 import com.example.macrobuddy.Models.UserInformation
+import com.example.macrobuddy.ViewModels.ConfigurationActivityViewModel
 import kotlinx.android.synthetic.main.activity_configuration.*
 import java.util.*
 
 class ConfigurationActivity : AppCompatActivity() {
+
+    private lateinit var viewModel : ConfigurationActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configuration)
 
         initView()
+        initViewModel()
     }
 
     /**
@@ -28,7 +33,25 @@ class ConfigurationActivity : AppCompatActivity() {
     private fun initView() {
         datePicker.visibility = View.GONE
         btnToggleDate.setOnClickListener { toggleDatePicker() }
-        btnCalculate.setOnClickListener { calculate() }
+        btnSaveConfig.setOnClickListener { saveConfig() }
+    }
+
+    /**
+     * Initialize/ configure the viewModel
+     */
+    private fun initViewModel() {
+        //initialize the viewModel with an empty game object
+        viewModel = ViewModelProviders.of(this).get(ConfigurationActivityViewModel::class.java)
+
+        viewModel.error.observe(this , androidx.lifecycle.Observer { message ->
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        })
+
+        //observe the success property of the vm so we know when the action has been completed succesfully
+        viewModel.success.observe(this, androidx.lifecycle.Observer { success ->
+            //when the configuration was successfully stored go to the home activity
+            if (success) startActivity(Intent(this, HomeActivity::class.java))
+        })
     }
 
     /**
@@ -59,7 +82,6 @@ class ConfigurationActivity : AppCompatActivity() {
      * Retrieves the picked date from the datePicker
      */
     private fun retrievePickedDate() {
-        //TODO implement
         val day = datePicker.dayOfMonth
         val month = datePicker.month + 1
         val year = datePicker.year
@@ -68,12 +90,19 @@ class ConfigurationActivity : AppCompatActivity() {
         txtDate.setText(dateString)
     }
 
-    //TODO is this method required? maybe just use retrieve form input, the calculation is going to be performed on the next activity?
-    private fun calculate() {
-        retrieveFormInput()
+    /**
+     * Saves the userInformation config to the database
+     */
+    private fun saveConfig() {
+        var userInfo = retrieveFormInput()
+        viewModel.userInformation.value =  userInfo
+        viewModel.setUserInformation()
     }
 
-    private fun retrieveFormInput() {
+    /**
+     * Retrieve the form input and serialize it to a UserInformation object
+     */
+    private fun retrieveFormInput() : UserInformation  {
         val goal: Int = getSelectedGoal()
         val gender: Int = getSelectedGender()
         val rateOfActivity: Int = getSelectedRateOfActivity()
@@ -81,8 +110,8 @@ class ConfigurationActivity : AppCompatActivity() {
         val dateOfBirth: Date = Date(txtDate.text.toString())
         val currentWeight: Double = if(txtWeight.text.toString().toDoubleOrNull() == null) (-1).toDouble() else txtWeight.text.toString().toDouble()
 
-        //TODO left of here, need to configure the view model and use it to create/ set the userInformation to the room database!
-    }
+        return UserInformation(goal,gender,rateOfActivity,length,dateOfBirth,currentWeight)
+       }
 
     /**
      * Retrieves the value of the selected gender in the radioButtonGroup and maps the value to its
@@ -132,6 +161,5 @@ class ConfigurationActivity : AppCompatActivity() {
             else -> -1
         }
     }
-
 
 }

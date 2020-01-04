@@ -1,18 +1,23 @@
 package com.example.macrobuddy.Database.DataAccessObjects
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.macrobuddy.Models.UserInformation
 
 
 @Dao
 interface UserInformationDao{
     @Insert
-    fun setUserInformation(userInformation: UserInformation)
+    fun insertUserInformation(userInformation: UserInformation)
 
-    @Query("SELECT * FROM userInformationTable")
+    @Query("SELECT * FROM userInformationTable LIMIT 1")
     fun getUserInformation(): LiveData<UserInformation>
+
+    @Query("SELECT * FROM userInformationTable LIMIT 1")
+    fun getUserInfromationObj() :UserInformation
+
+    @Update
+    fun updateUserInformation(userInformation: UserInformation)
+
+
 }
