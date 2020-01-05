@@ -14,10 +14,19 @@ class UserInformationRepository(context: Context) {
         userInformationDao = database!!.userInforamtionDao()
     }
 
+    /**
+     * Retrieves the current user information / config
+     */
     fun getUserInformation(): LiveData<UserInformation> {
         return userInformationDao.getUserInformation()
     }
 
+    /**
+     * Updates the current weigth of the user and logs the weights as history
+     */
+    fun updateCurrentWeight(newWeight : Double){
+        userInformationDao.updateCurrentWeigth(newWeight)
+      }
 
     /**
      * Inserts a new record if none is present yet otherwise updates the existing record.
