@@ -22,7 +22,9 @@ class ConfigurationActivityViewModel(application: Application) : AndroidViewMode
     val success = MutableLiveData<Boolean>()
 
 
-    //TODO
+    /**
+     * Store the input from the user from the config form in the database
+     */
     fun setUserInformation() {
         if (isUserInputValid()) {
             mainScope.launch {
@@ -66,7 +68,6 @@ class ConfigurationActivityViewModel(application: Application) : AndroidViewMode
                 error.value = "Het opgegeven huidige gewicht is incorrect, probeer het opnieuw"
                 false
             }
-            //TODO add some more validation rules for digits strings etc! (dont know if needed since the -1's handle null and incorrect now)?
 
             else -> true
         }

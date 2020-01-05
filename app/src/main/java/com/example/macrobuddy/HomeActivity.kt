@@ -1,6 +1,7 @@
 package com.example.macrobuddy
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -33,13 +34,16 @@ class HomeActivity : AppCompatActivity() {
             saveWeight()
             txtCurrentWeigth.hideKeyboard()
         }
+        btnHistory.setOnClickListener{
+            startActivity(Intent(this, WeightHistoryActivity::class.java))
+        }
     }
 
     /**
      * Initialize/ configure the viewModel
      */
     private fun initViewModel() {
-        //initialize the viewModel with an empty game object
+        //initialize the view model
         viewModel = ViewModelProviders.of(this).get(HomeActivityViewModel::class.java)
 
         viewModel.userInformation.observe(this, Observer { obj ->

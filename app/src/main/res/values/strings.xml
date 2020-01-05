@@ -22,4 +22,6 @@
     <string name="carbs">Carbs</string>
     <string name="vats">Vet</string>
     <string name="callories">Callorieën</string>
+    <string name="kg">KG</string>
+    <string name="weight_history">Gewicht history</string>
 </resources>

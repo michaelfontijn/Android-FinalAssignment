@@ -14,11 +14,12 @@ import com.example.macrobuddy.Enums.RateOfActivity
 import com.example.macrobuddy.Models.UserInformation
 import com.example.macrobuddy.ViewModels.ConfigurationActivityViewModel
 import kotlinx.android.synthetic.main.activity_configuration.*
+import java.lang.Exception
 import java.util.*
 
 class ConfigurationActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : ConfigurationActivityViewModel
+    private lateinit var viewModel: ConfigurationActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class ConfigurationActivity : AppCompatActivity() {
         //initialize the viewModel with an empty game object
         viewModel = ViewModelProviders.of(this).get(ConfigurationActivityViewModel::class.java)
 
-        viewModel.error.observe(this , androidx.lifecycle.Observer { message ->
+        viewModel.error.observe(this, androidx.lifecycle.Observer { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         })
 
@@ -56,7 +57,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
         viewModel.userInformationObj.observe(this, androidx.lifecycle.Observer { obj ->
             //if there is already a userInformationRecord in the database continue to homeActivity right away
-            if(obj != null) startActivity(Intent(this, HomeActivity::class.java))
+            if (obj != null) startActivity(Intent(this, HomeActivity::class.java))
         })
     }
 
@@ -100,23 +101,31 @@ class ConfigurationActivity : AppCompatActivity() {
      */
     private fun saveConfig() {
         var userInfo = retrieveFormInput()
-        viewModel.userInformation.value =  userInfo
+        viewModel.userInformation.value = userInfo
         viewModel.setUserInformation()
     }
 
     /**
      * Retrieve the form input and serialize it to a UserInformation object
      */
-    private fun retrieveFormInput() : UserInformation  {
+    private fun retrieveFormInput(): UserInformation {
         val goal: Int = getSelectedGoal()
         val gender: Int = getSelectedGender()
         val rateOfActivity: Int = getSelectedRateOfActivity()
-        val length: Int = if(txtLength.text.toString().toIntOrNull() == null) -1 else txtLength.text.toString().toInt()
-        val dateOfBirth: Date = Date(txtDate.text.toString())
-        val currentWeight: Double = if(txtWeight.text.toString().toDoubleOrNull() == null) (-1).toDouble() else txtWeight.text.toString().toDouble()
+        val length: Int =
+            if (txtLength.text.toString().toIntOrNull() == null) -1 else txtLength.text.toString().toInt()
 
-        return UserInformation(goal,gender,rateOfActivity,length,dateOfBirth,currentWeight)
-       }
+        val dateOfBirth = try {
+            Date(txtDate.text.toString())
+        } catch (e: Exception) {
+            null
+        }
+
+        val currentWeight: Double =
+            if (txtWeight.text.toString().toDoubleOrNull() == null) (-1).toDouble() else txtWeight.text.toString().toDouble()
+
+        return UserInformation(goal, gender, rateOfActivity, length, dateOfBirth, currentWeight)
+    }
 
     /**
      * Retrieves the value of the selected gender in the radioButtonGroup and maps the value to its
@@ -153,7 +162,7 @@ class ConfigurationActivity : AppCompatActivity() {
      * Retrieves the value of the selected rateOfActivity in the radioButtonGroup and maps the value to its
      * associated enum value
      */
-    private fun getSelectedRateOfActivity() : Int{
+    private fun getSelectedRateOfActivity(): Int {
         //get the id of the selected radioButton
         var selectedRateOfActivityId: Int = radioRateOfActivity.checkedRadioButtonId
 

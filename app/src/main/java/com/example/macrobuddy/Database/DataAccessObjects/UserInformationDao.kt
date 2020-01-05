@@ -22,6 +22,4 @@ interface UserInformationDao{
     @Query("UPDATE userinformationtable SET currentWeight=:newWeight WHERE ID =(SELECT ID FROM userinformationtable LIMIT 1) ")
     fun updateCurrentWeigth(newWeight : Double)
 
-
-
 }
